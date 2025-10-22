@@ -1,0 +1,103 @@
+/* =====================
+   OctoFit Tracker Theme
+   ===================== */
+
+:root {
+  --octo-bg: #0f1b2b;
+  --octo-bg-alt: #132237;
+  --octo-surface: #192d45;
+  --octo-accent: #4cc2ff;
+  --octo-accent-alt: #876bff;
+  --octo-danger: #ff4d61;
+  --octo-success: #35c48d;
+  --octo-warning: #ffc559;
+  --octo-text: #e3eef7;
+  --octo-text-dim: #9bb2c9;
+  --octo-border: #28425f;
+  --octo-focus: #ffbf47;
+  --octo-radius: 8px;
+  --octo-transition: 0.18s ease-in-out;
+}
+
+html, body, #root, .app-wrapper {
+  background: radial-gradient(circle at 20% 20%, var(--octo-bg-alt) 0%, var(--octo-bg) 70%);
+  min-height: 100vh;
+  color: var(--octo-text);
+}
+
+body { font-family: system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif; }
+
+.navbar {
+  background: linear-gradient(90deg, var(--octo-surface), #101b29) !important;
+  border-bottom: 1px solid var(--octo-border);
+}
+
+.navbar-brand, .nav-link { font-weight: 500; }
+.navbar-brand span { letter-spacing: .5px; }
+.navbar-brand .logo-img { filter: drop-shadow(0 0 4px rgba(76,194,255,.4)); }
+
+.nav-link { position: relative; }
+.nav-link.active, .nav-link:focus, .nav-link:hover {
+  color: var(--octo-accent) !important;
+}
+.nav-link.active::after, .nav-link:hover::after {
+  content: "";
+  position: absolute; left: 10%; right:10%; bottom: 4px; height: 2px;
+  background: linear-gradient(90deg,var(--octo-accent),var(--octo-accent-alt));
+  border-radius: 2px;
+}
+
+h1,h2,h3,h4,h5 { color: var(--octo-accent); font-weight: 600; }
+h2.h5 { color: var(--octo-accent); }
+
+a { color: var(--octo-accent); text-decoration: none; transition: var(--octo-transition); }
+a:hover { color: var(--octo-accent-alt); }
+
+/* Cards */
+.card { background: rgba(25,45,69,0.85); border: 1px solid var(--octo-border); border-radius: var(--octo-radius); backdrop-filter: blur(6px); }
+.card-header { background: linear-gradient(90deg,var(--octo-surface),var(--octo-bg)); color: var(--octo-text); border-bottom: 1px solid var(--octo-border); }
+.card-header h2, .card-header .h5 { margin: 0; }
+
+/* Tables */
+.table { color: var(--octo-text); }
+.table thead th { background: var(--octo-surface); border-bottom: 2px solid var(--octo-border); color: var(--octo-accent); font-size: .8rem; letter-spacing: .5px; }
+.table-striped tbody tr:nth-of-type(odd) { background: rgba(255,255,255,0.02); }
+.table-hover tbody tr:hover { background: rgba(76,194,255,0.08); }
+.table td, .table th { border-color: var(--octo-border); }
+
+/* Buttons */
+.btn { border-radius: var(--octo-radius); font-weight: 500; }
+.btn-outline-primary { color: var(--octo-accent); border-color: var(--octo-accent); }
+.btn-outline-primary:hover, .btn-outline-primary:focus { background: var(--octo-accent); color: #04101c; }
+.btn-secondary { background: var(--octo-accent-alt); border: none; }
+.btn-secondary:hover { background: #6d55e6; }
+.btn-danger { background: var(--octo-danger); border: none; }
+.btn-success { background: var(--octo-success); border: none; }
+
+/* Forms */
+.form-control { background: #112131; border: 1px solid var(--octo-border); color: var(--octo-text); }
+.form-control:focus { border-color: var(--octo-accent); box-shadow: 0 0 0 0.15rem rgba(76,194,255,.25); }
+
+/* Modals */
+.modal-content { background: #13273c; border: 1px solid var(--octo-border); }
+.modal-header { border-bottom-color: var(--octo-border); }
+.modal-footer { border-top-color: var(--octo-border); }
+
+/* Scrollbar subtle styling */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0e1825; }
+::-webkit-scrollbar-thumb { background: #254157; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #316083; }
+
+/* Utility */
+.logo-img { transition: var(--octo-transition); }
+.logo-img:hover { transform: scale(1.04) rotate(-2deg); }
+
+.table-responsive { border-radius: var(--octo-radius); overflow: hidden; box-shadow: 0 4px 12px -4px rgba(0,0,0,.4); }
+
+.badge.bg-primary, .badge.bg-info, .badge.bg-secondary { background: var(--octo-accent) !important; color: #04101c; }
+
+.alert-danger { background: #361823; border: 1px solid #6b2239; color: #ffb3c2; }
+
+/* Original CRA animation retained if logo.svg is still used somewhere */
+@keyframes App-logo-spin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
