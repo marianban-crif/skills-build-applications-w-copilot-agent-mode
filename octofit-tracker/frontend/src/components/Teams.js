@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { fetchResource } from '../api';
+
+// Hard-coded backend endpoint for teams
+const TEAMS_API = 'https://stunning-engine-4jv5g5jg9j9q3qxj5-8000.app.github.dev/api/teams/';
 
 export default function Teams() {
   const [data, setData] = useState([]);
@@ -17,13 +19,21 @@ export default function Teams() {
 
   const load = useCallback(async () => {
     setRefreshing(true);
-    const { list, error: err, url, raw } = await fetchResource('teams');
-    // eslint-disable-next-line no-console
-    console.log('[Teams] url:', url, 'raw:', raw);
-    if (err) setError(err);
-    setData(list);
-    setLoading(false);
-    setRefreshing(false);
+    try {
+      const resp = await fetch(TEAMS_API);
+      const raw = await resp.json().catch(() => null);
+      const list = Array.isArray(raw) ? raw : (raw && Array.isArray(raw.results) ? raw.results : []);
+      // eslint-disable-next-line no-console
+      console.log('[Teams] fetched', { endpoint: TEAMS_API, raw, normalized: list });
+      setData(list);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('[Teams] fetch error', err);
+      setError(err);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
   }, []);
 
   useEffect(() => { load(); }, [load]);

@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { fetchResource } from '../api';
+
+// Hard-coded backend endpoint for leaderboard
+const LEADERBOARD_API = 'https://stunning-engine-4jv5g5jg9j9q3qxj5-8000.app.github.dev/api/leaderboard/';
 
 export default function Leaderboard() {
   const [data, setData] = useState([]);
@@ -17,13 +19,21 @@ export default function Leaderboard() {
 
   const load = useCallback(async () => {
     setRefreshing(true);
-    const { list, error: err, url, raw } = await fetchResource('leaderboard');
-    // eslint-disable-next-line no-console
-    console.log('[Leaderboard] url:', url, 'raw:', raw);
-    if (err) setError(err);
-    setData(list);
-    setLoading(false);
-    setRefreshing(false);
+    try {
+      const resp = await fetch(LEADERBOARD_API);
+      const raw = await resp.json().catch(() => null);
+      const list = Array.isArray(raw) ? raw : (raw && Array.isArray(raw.results) ? raw.results : []);
+      // eslint-disable-next-line no-console
+      console.log('[Leaderboard] fetched', { endpoint: LEADERBOARD_API, raw, normalized: list });
+      setData(list);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('[Leaderboard] fetch error', err);
+      setError(err);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
   }, []);
 
   // Initial load
