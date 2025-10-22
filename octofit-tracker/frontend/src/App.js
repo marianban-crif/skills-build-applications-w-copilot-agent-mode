@@ -13,7 +13,10 @@ function App() {
     <div className="app-wrapper">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
         <div className="container-fluid">
-          <NavLink to="/" className="navbar-brand">OctoFit Tracker</NavLink>
+          <NavLink to="/" className="navbar-brand d-flex align-items-center gap-2">
+            <img src="/octofitapp-small.png" alt="OctoFit" height="36" className="logo-img" />
+            <span>OctoFit Tracker</span>
+          </NavLink>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
