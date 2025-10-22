@@ -33,7 +33,13 @@ export default function Leaderboard() {
   if (loading) return <div className="text-muted">Loading leaderboard...</div>;
   if (error) return <div className="alert alert-danger">Failed to load leaderboard.</div>;
 
-  const columns = ['id','username','score','points','total'];
+  // Columns aligned with backend Leaderboard model fields
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'user', label: 'User' },
+    { key: 'team', label: 'Team' },
+    { key: 'score', label: 'Score' },
+  ];
 
   return (
     <div className="card shadow-sm mb-4">
@@ -56,14 +62,14 @@ export default function Leaderboard() {
             <table className="table table-striped table-hover align-middle">
               <thead className="table-light">
                 <tr>
-                  {columns.map(col => <th key={col}>{col.toUpperCase()}</th>)}
+                  {columns.map(c => <th key={c.key}>{c.label}</th>)}
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((item, i) => (
                   <tr key={item.id || i} style={{cursor:'pointer'}} onClick={() => setSelected(item)}>
-                    {columns.map(col => (
-                      <td key={col}>{item[col] !== undefined ? item[col] : (item.user && col==='username' ? item.user.username : '')}</td>
+                    {columns.map(c => (
+                      <td key={c.key}>{item[c.key] !== undefined ? item[c.key] : ''}</td>
                     ))}
                   </tr>
                 ))}

@@ -32,7 +32,15 @@ export default function Users() {
   if (loading) return <div className="text-muted">Loading users...</div>;
   if (error) return <div className="alert alert-danger">Failed to load users.</div>;
 
-  const columns = ['id','username','email','name'];
+  // Columns aligned with Django auth User model; full_name is derived
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'username', label: 'Username' },
+    { key: 'email', label: 'Email' },
+    { key: 'first_name', label: 'First Name' },
+    { key: 'last_name', label: 'Last Name' },
+    { key: 'full_name', label: 'Full Name' },
+  ];
 
   return (
     <div className="card shadow-sm mb-4">
@@ -55,15 +63,21 @@ export default function Users() {
             <table className="table table-striped table-hover align-middle">
               <thead className="table-light">
                 <tr>
-                  {columns.map(col => <th key={col}>{col.toUpperCase()}</th>)}
+                  {columns.map(c => <th key={c.key}>{c.label}</th>)}
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((item, i) => (
                   <tr key={item.id || i} style={{cursor:'pointer'}} onClick={() => setSelected(item)}>
-                    {columns.map(col => (
-                      <td key={col}>{item[col] !== undefined ? item[col] : ''}</td>
-                    ))}
+                    {columns.map(c => {
+                      let value = '';
+                      if (c.key === 'full_name') {
+                        value = [item.first_name, item.last_name].filter(Boolean).join(' ');
+                      } else {
+                        value = item[c.key] !== undefined ? item[c.key] : '';
+                      }
+                      return <td key={c.key}>{value}</td>;
+                    })}
                   </tr>
                 ))}
               </tbody>

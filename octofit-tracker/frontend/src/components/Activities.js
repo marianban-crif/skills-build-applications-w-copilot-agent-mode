@@ -35,7 +35,13 @@ export default function Activities() {
   if (loading) return <div className="text-muted">Loading activities...</div>;
   if (error) return <div className="alert alert-danger">Failed to load activities.</div>;
 
-  const columns = ['id','name','title','type','duration'];
+  // Columns aligned with backend Activity model fields
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'name', label: 'Name' },
+    { key: 'user', label: 'User' },
+    { key: 'team', label: 'Team' },
+  ];
 
   return (
     <div className="card shadow-sm mb-4">
@@ -60,14 +66,14 @@ export default function Activities() {
             <table className="table table-striped table-hover align-middle">
               <thead className="table-light">
                 <tr>
-                  {columns.map(col => <th key={col}>{col.toUpperCase()}</th>)}
+                  {columns.map(c => <th key={c.key}>{c.label}</th>)}
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((item, i) => (
                   <tr key={item.id || i} style={{cursor:'pointer'}} onClick={() => setSelected(item)}>
-                    {columns.map(col => (
-                      <td key={col}>{item[col] !== undefined ? item[col] : ''}</td>
+                    {columns.map(c => (
+                      <td key={c.key}>{item[c.key] !== undefined ? item[c.key] : ''}</td>
                     ))}
                   </tr>
                 ))}

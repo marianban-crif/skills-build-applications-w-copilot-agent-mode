@@ -32,7 +32,11 @@ export default function Teams() {
   if (loading) return <div className="text-muted">Loading teams...</div>;
   if (error) return <div className="alert alert-danger">Failed to load teams.</div>;
 
-  const columns = ['id','name','team_name','members'];
+  // Columns aligned with backend Team model fields
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'name', label: 'Name' },
+  ];
 
   return (
     <div className="card shadow-sm mb-4">
@@ -55,14 +59,14 @@ export default function Teams() {
             <table className="table table-striped table-hover align-middle">
               <thead className="table-light">
                 <tr>
-                  {columns.map(col => <th key={col}>{col.toUpperCase()}</th>)}
+                  {columns.map(c => <th key={c.key}>{c.label}</th>)}
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((item, i) => (
                   <tr key={item.id || i} style={{cursor:'pointer'}} onClick={() => setSelected(item)}>
-                    {columns.map(col => (
-                      <td key={col}>{col==='members' && Array.isArray(item.members) ? item.members.length : (item[col] !== undefined ? (Array.isArray(item[col]) ? item[col].length : item[col]) : '')}</td>
+                    {columns.map(c => (
+                      <td key={c.key}>{item[c.key] !== undefined ? item[c.key] : ''}</td>
                     ))}
                   </tr>
                 ))}
